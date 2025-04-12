@@ -1,0 +1,10 @@
+utils/.env
+.env
+myenv
+model_src/__pycache__
+chains/__pycache__
+configs/__pycache__
+state_management/__pycache__
+logs/__pycache__
+tests/__pycache__
+utils/__pycache__
