@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-gray-100 text-gray-900">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- ✅ META for mobile display -->
   <title>Medical Chat Assistant</title>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Axios -->
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
   <!-- html2pdf.js for PDF download -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-  <!-- Optional: fallback styles for prose -->
+  <!-- Axios -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
   <style>
     .prose ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
     .prose li { margin-bottom: 0.25rem; }
@@ -21,21 +21,35 @@
     .prose p { margin-bottom: 0.5rem; }
   </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
-  <div class="max-w-3xl mx-auto my-6 px-4 sm:px-6">
-    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-      <div class="p-4 bg-blue-600 text-white text-xl font-semibold">
-        🩺 Medical Chat Assistant
-      </div>
+<body class="transition-colors duration-300 bg-gray-100 dark:bg-gray-900 dark:text-gray-100 min-h-screen flex flex-col items-center justify-center px-2 py-4">
 
-      <div id="chat-container" class="p-4 h-[400px] sm:h-[500px] overflow-y-auto space-y-4 text-sm sm:text-base">
-        <div class="text-center text-gray-500">Type "New case" to start.</div>
-      </div>
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg hidden z-50"></div>
 
-      <div class="p-4 border-t flex flex-col sm:flex-row gap-2">
-        <input id="user-input" type="text" placeholder="Type your message..." class="flex-grow border rounded px-4 py-2">
-        <button id="send-btn" class="bg-blue-600 text-white px-4 py-2 rounded">Send</button>
-        <button id="download-btn" class="bg-green-600 text-white px-4 py-2 rounded hidden">Download PDF</button>
+  <!-- App Container -->
+  <div class="w-full max-w-3xl bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden flex flex-col">
+    <!-- Header -->
+    <div class="flex items-center justify-between p-4 bg-blue-600 dark:bg-blue-700 text-white text-xl font-semibold">
+      🩺 Medical Chat Assistant
+      <button onclick="toggleDarkMode()" class="text-sm px-2 py-1 border border-white rounded hover:bg-white hover:text-blue-600 transition">🌓 Mode</button>
+    </div>
+
+    <!-- Chat Window -->
+    <div id="chat-container" class="p-4 h-[450px] sm:h-[550px] overflow-y-auto space-y-4 text-sm sm:text-base bg-gray-50 dark:bg-gray-700">
+      <div class="text-center text-gray-500 dark:text-gray-300">Type "New case" to start.</div>
+    </div>
+
+    <!-- Input Area -->
+    <div class="p-4 border-t dark:border-gray-700 flex flex-col sm:flex-row gap-2">
+      <input id="user-input" type="text" placeholder="Type your message..."
+             class="flex-grow border dark:border-gray-600 bg-white dark:bg-gray-800 rounded px-4 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      <div class="flex gap-2">
+        <button id="send-btn" class="bg-blue-600 text-white px-4 py-2 rounded text-sm sm:text-base">
+          Send
+        </button>
+        <button id="download-btn" class="bg-green-600 text-white px-4 py-2 rounded text-sm sm:text-base hidden">
+          Download PDF
+        </button>
       </div>
     </div>
   </div>
@@ -45,6 +59,7 @@
     let answers = {};
     const keys = ["complaint_duration", "key_findings_vitals", "relevant_history"];
 
+    // Handle sending
     document.getElementById('send-btn').onclick = async () => {
       const userInput = document.getElementById('user-input').value;
       if (!userInput.trim()) return;
@@ -64,6 +79,7 @@
       }
     };
 
+    // Get next question
     async function getNextQuestion() {
       if (step < keys.length) {
         const res = await axios.post('/get_question', { step });
@@ -82,33 +98,37 @@
       }
     }
 
+    // Append chat message
     function appendChat(sender, message, isReport = false) {
       const chat = document.getElementById('chat-container');
       let bubbleHTML;
-
       if (isReport) {
-        bubbleHTML = `<div class="max-w-full mr-auto p-4 bg-white shadow rounded" id="report-content">
-                        <div class="prose prose-sm sm:prose">${message}</div>
-                      </div>`;
+        bubbleHTML = `
+          <div class="w-full mr-auto p-4 bg-white dark:bg-gray-900 shadow rounded" id="report-content">
+            <div class="prose prose-sm sm:prose dark:prose-invert">${message}</div>
+          </div>`;
       } else {
-        const bubbleClass = sender === "Doctor" ? "bg-blue-500 text-white ml-auto" : "bg-gray-200 mr-auto";
-        bubbleHTML = `<div class="max-w-[80%] ${bubbleClass} px-3 py-2 rounded">${message}</div>`;
+        const bubbleClass = sender === "Doctor"
+          ? "bg-blue-500 text-white ml-auto"
+          : "bg-gray-200 dark:bg-gray-600 text-black dark:text-white mr-auto";
+        bubbleHTML = `<div class="max-w-[80%] ${bubbleClass} px-3 py-2 rounded text-sm sm:text-base">${message}</div>`;
       }
 
       chat.innerHTML += bubbleHTML;
       chat.scrollTop = chat.scrollHeight;
     }
 
-    document.getElementById('user-input').addEventListener("keydown", function(event) {
+    // Enter = send
+    document.getElementById('user-input').addEventListener("keydown", function (event) {
       if (event.key === "Enter") {
         document.getElementById('send-btn').click();
       }
     });
 
-    // PDF download
+    // PDF Download
     document.getElementById('download-btn').onclick = () => {
       const element = document.getElementById("report-content");
-      if (!element) return alert("No report to download.");
+      if (!element) return showToast("⚠️ No report to download.");
       const opt = {
         margin: 0.5,
         filename: 'medical_report.pdf',
@@ -116,8 +136,23 @@
         html2canvas: { scale: 2 },
         jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
       };
-      html2pdf().from(element).set(opt).save();
+      html2pdf().from(element).set(opt).save().then(() => {
+        showToast("✅ Report downloaded as PDF.");
+      });
     };
+
+    // Theme toggle
+    function toggleDarkMode() {
+      document.documentElement.classList.toggle("dark");
+    }
+
+    // Toast Notification
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      toast.innerText = msg;
+      toast.classList.remove("hidden");
+      setTimeout(() => toast.classList.add("hidden"), 3000);
+    }
   </script>
 </body>
 </html>
