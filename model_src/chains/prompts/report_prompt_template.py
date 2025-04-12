@@ -9,7 +9,7 @@ Context:
 
 Task:
 Generate a structured preliminary report with the following **plain-text sections**, using clear headings, spacing, and bullet points. Avoid Markdown or HTML formatting.
-
+make sure the information you provide are valid and actually helps medical professional.
 Format the report as follows:
 
 🩺 PRELIMINARY MEDICAL REPORT
