@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, render_template
+from chains.case_report_chain import create_case_report_chain
 
 app = Flask(__name__)
 
@@ -92,7 +93,16 @@ def generate_report():
         data = request.get_json()
         answers = data.get("answers", {})
 
-        report_html = generate_structured_html_report(answers)
+        report_input = {
+    "complaint_duration": answers.get("complaint_duration"),
+    "key_findings_vitals": answers.get("key_findings_vitals"),
+    "relevant_history": answers.get("relevant_history"),
+}
+
+        print("done")
+        chain = create_case_report_chain()
+        report_html = chain.invoke(report_input)
+
         return jsonify({"success": True, "report": report_html})
     except Exception as e:
         return jsonify({"success": False, "error": str(e)})

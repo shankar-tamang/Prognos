@@ -8,7 +8,7 @@ Context:
 - Relevant Patient History: {relevant_history}
 
 Task:
-Generate a structured preliminary report with the following **plain-text sections**, using clear headings, spacing, and bullet points. Avoid Markdown or HTML formatting.
+Generate a structured preliminary report with the following **plain-text sections**, using clear headings, spacing, and bullet points. Generate it in HTML formatting so that it can be rendered clearly in frontend in abrowser.
 make sure the information you provide are valid and actually helps medical professional.
 Format the report as follows:
 
