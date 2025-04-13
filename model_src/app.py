@@ -49,5 +49,10 @@ def generate_report():
         return jsonify({"success": False, "error": str(e)})
 
 
+@app.route('/review_form', methods=['GET'])
+def review_form():
+    return render_template('review_form.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True)
