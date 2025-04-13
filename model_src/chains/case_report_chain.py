@@ -1,8 +1,8 @@
 from langchain_core.output_parsers import StrOutputParser
-from model_src.llm_provider import get_gemini_llm
-from model_src.chains.prompts.report_prompt_template import REPORT_PROMPT_TEMPLATE
+from llm_provider import get_gemini_llm
+from chains.prompts.report_prompt_template import REPORT_PROMPT_TEMPLATE
 from langchain_core.prompts import PromptTemplate
-from model_src.utils.logging_utils import logger
+from utils.logging_utils import logger
 
 def create_case_report_chain(model_name="gemini-2.0-flash", temperature=0):
     try:

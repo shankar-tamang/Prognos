@@ -1,5 +1,5 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
-from model_src.configs.config import get_google_api_key
+from configs.config import get_google_api_key
 
 def get_gemini_llm(model_name="gemini-2.0-flash", temperature=0):
     api_key = get_google_api_key()

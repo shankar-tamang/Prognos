@@ -286,3 +286,61 @@
 2025-04-13 11:06:36,047 INFO: * Debugger PIN: 261-147-477
 2025-04-13 11:17:26,909 INFO: * Detected change in '/home/shank/Documents/HimalAI/Prognos (Copy)/model_src/app.py', reloading
 2025-04-13 11:17:27,348 INFO: * Restarting with stat
+2025-04-13 13:43:31,010 INFO:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-13 13:43:31,011 INFO:[33mPress CTRL+C to quit[0m
+2025-04-13 13:43:31,015 INFO: * Restarting with stat
+2025-04-13 13:43:36,522 WARNING: * Debugger is active!
+2025-04-13 13:43:36,539 INFO: * Debugger PIN: 261-147-477
+2025-04-13 13:43:44,158 INFO:127.0.0.1 - - [13/Apr/2025 13:43:44] "GET / HTTP/1.1" 200 -
+2025-04-13 13:43:55,475 INFO:127.0.0.1 - - [13/Apr/2025 13:43:55] "POST /get_question HTTP/1.1" 200 -
+2025-04-13 13:44:04,502 INFO:127.0.0.1 - - [13/Apr/2025 13:44:04] "POST /get_question HTTP/1.1" 200 -
+2025-04-13 13:44:10,196 INFO:127.0.0.1 - - [13/Apr/2025 13:44:10] "POST /get_question HTTP/1.1" 200 -
+2025-04-13 13:44:28,510 INFO:127.0.0.1 - - [13/Apr/2025 13:44:28] "POST /generate_report HTTP/1.1" 200 -
+2025-04-13 13:45:27,365 INFO: * Detected change in '/home/shank/Documents/HimalAI/Prognos (Copy)/model_src/app.py', reloading
+2025-04-13 13:45:28,185 INFO: * Restarting with stat
+2025-04-13 13:45:34,301 WARNING: * Debugger is active!
+2025-04-13 13:45:34,314 INFO: * Debugger PIN: 261-147-477
+2025-04-13 13:45:36,536 INFO: * Detected change in '/home/shank/Documents/HimalAI/Prognos (Copy)/model_src/app.py', reloading
+2025-04-13 13:45:37,230 INFO: * Restarting with stat
+2025-04-13 13:45:45,216 WARNING: * Debugger is active!
+2025-04-13 13:45:45,227 INFO: * Debugger PIN: 261-147-477
+2025-04-13 13:45:46,376 INFO: * Detected change in '/home/shank/Documents/HimalAI/Prognos (Copy)/model_src/app.py', reloading
+2025-04-13 13:45:47,225 INFO: * Restarting with stat
+2025-04-13 13:45:54,565 WARNING: * Debugger is active!
+2025-04-13 13:45:54,571 INFO: * Debugger PIN: 261-147-477
+2025-04-13 13:47:43,881 INFO:127.0.0.1 - - [13/Apr/2025 13:47:43] "GET / HTTP/1.1" 200 -
+2025-04-13 13:47:49,727 INFO:127.0.0.1 - - [13/Apr/2025 13:47:49] "POST /get_question HTTP/1.1" 200 -
+2025-04-13 13:47:52,440 INFO:127.0.0.1 - - [13/Apr/2025 13:47:52] "POST /get_question HTTP/1.1" 200 -
+2025-04-13 13:48:12,391 INFO:127.0.0.1 - - [13/Apr/2025 13:48:12] "GET / HTTP/1.1" 200 -
+2025-04-13 13:48:16,278 INFO:127.0.0.1 - - [13/Apr/2025 13:48:16] "POST /get_question HTTP/1.1" 200 -
+2025-04-13 13:48:18,625 INFO:127.0.0.1 - - [13/Apr/2025 13:48:18] "POST /get_question HTTP/1.1" 200 -
+2025-04-13 13:48:22,180 INFO:127.0.0.1 - - [13/Apr/2025 13:48:22] "GET / HTTP/1.1" 200 -
+2025-04-13 13:48:27,559 INFO:127.0.0.1 - - [13/Apr/2025 13:48:27] "POST /get_question HTTP/1.1" 200 -
+2025-04-13 13:48:28,852 INFO:127.0.0.1 - - [13/Apr/2025 13:48:28] "POST /get_question HTTP/1.1" 200 -
+2025-04-13 13:49:03,902 INFO: * Detected change in '/home/shank/Documents/HimalAI/Prognos (Copy)/model_src/app.py', reloading
+2025-04-13 13:49:05,061 INFO: * Restarting with stat
+2025-04-13 13:49:11,019 WARNING: * Debugger is active!
+2025-04-13 13:49:11,027 INFO: * Debugger PIN: 261-147-477
+2025-04-13 13:49:23,563 INFO: * Detected change in '/home/shank/Documents/HimalAI/Prognos (Copy)/model_src/app.py', reloading
+2025-04-13 13:49:24,479 INFO: * Restarting with stat
+2025-04-13 13:49:36,976 INFO:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-13 13:49:36,976 INFO:[33mPress CTRL+C to quit[0m
+2025-04-13 13:49:36,979 INFO: * Restarting with stat
+2025-04-13 13:49:40,759 WARNING: * Debugger is active!
+2025-04-13 13:49:40,766 INFO: * Debugger PIN: 261-147-477
+2025-04-13 13:49:46,887 INFO:127.0.0.1 - - [13/Apr/2025 13:49:46] "GET / HTTP/1.1" 200 -
+2025-04-13 13:49:51,736 INFO:127.0.0.1 - - [13/Apr/2025 13:49:51] "POST /get_question HTTP/1.1" 200 -
+2025-04-13 13:49:54,244 INFO:127.0.0.1 - - [13/Apr/2025 13:49:54] "POST /get_question HTTP/1.1" 200 -
+2025-04-13 13:49:57,138 INFO:127.0.0.1 - - [13/Apr/2025 13:49:57] "POST /get_question HTTP/1.1" 200 -
+2025-04-13 13:50:19,517 INFO: * Detected change in '/home/shank/Documents/HimalAI/Prognos (Copy)/model_src/app.py', reloading
+2025-04-13 13:50:20,368 INFO: * Restarting with stat
+2025-04-13 13:50:27,722 WARNING: * Debugger is active!
+2025-04-13 13:50:27,733 INFO: * Debugger PIN: 261-147-477
+2025-04-13 13:50:34,211 INFO: * Detected change in '/home/shank/Documents/HimalAI/Prognos (Copy)/model_src/app.py', reloading
+2025-04-13 13:50:35,008 INFO: * Restarting with stat
+2025-04-13 13:50:43,164 WARNING: * Debugger is active!
+2025-04-13 13:50:43,178 INFO: * Debugger PIN: 261-147-477
+2025-04-13 13:50:43,271 INFO: * Detected change in '/home/shank/Documents/HimalAI/Prognos (Copy)/model_src/app.py', reloading
+2025-04-13 13:50:44,053 INFO: * Restarting with stat
