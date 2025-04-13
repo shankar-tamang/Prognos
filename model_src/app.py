@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, render_template
-from chains.case_report_chain import create_case_report_chain
+from model_src.chains.case_report_chain import create_case_report_chain
 
 app = Flask(__name__)
 

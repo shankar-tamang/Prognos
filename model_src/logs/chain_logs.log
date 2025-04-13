@@ -284,3 +284,5 @@
 2025-04-13 11:06:33,945 INFO: * Restarting with stat
 2025-04-13 11:06:36,043 WARNING: * Debugger is active!
 2025-04-13 11:06:36,047 INFO: * Debugger PIN: 261-147-477
+2025-04-13 11:17:26,909 INFO: * Detected change in '/home/shank/Documents/HimalAI/Prognos (Copy)/model_src/app.py', reloading
+2025-04-13 11:17:27,348 INFO: * Restarting with stat
