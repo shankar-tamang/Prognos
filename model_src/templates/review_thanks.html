@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-slate-100 text-slate-900">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thank You - Medical Chat Assistant</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind Config for dark mode -->
+  <script>
+    tailwind.config = { darkMode: 'class' }
+  </script>
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body class="transition-colors duration-300 bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100 min-h-screen flex flex-col p-2 sm:p-4">
+  <!-- Navbar -->
+  <header class="mb-4">
+    <nav class="flex items-center justify-between p-4 bg-blue-600 dark:bg-blue-700 text-white rounded-lg">
+      <div class="flex items-center gap-2 text-lg font-semibold">
+        <i class="fa-solid fa-stethoscope"></i>
+        <span>Medical Chat Assistant</span>
+      </div>
+      <div class="flex gap-2">
+        <a href="/" class="px-3 py-2 hover:bg-blue-500 transition rounded">Home</a>
+        <a href="/review_form" class="px-3 py-2 hover:bg-blue-500 transition rounded">Review Form</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Thank You Container -->
+  <main class="flex-grow max-w-2xl mx-auto bg-white dark:bg-slate-800 shadow-xl rounded-xl p-6 text-center">
+    <h1 class="text-2xl font-bold mb-4">Thank You, {{ name }}!</h1>
+    <p class="mb-4">Your review has been submitted successfully.</p>
+    <a href="/" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+      Return to Home
+    </a>
+  </main>
+</body>
+</html>

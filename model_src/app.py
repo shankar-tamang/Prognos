@@ -3,7 +3,10 @@ from chains.case_report_chain import create_case_report_chain
 
 app = Flask(__name__)
 
-# Stepwise questions
+# In-memory storage for review submissions
+reviews = []
+
+# Stepwise questions for the case report process
 QUESTIONS = [
     "What is the patient name?",
     "What is the patient age?",
@@ -11,8 +14,6 @@ QUESTIONS = [
     "What are the key clinical observations or vital signs?",
     "Please provide relevant patient history (conditions, allergies, medications)."
 ]
-
-
 
 @app.route('/')
 def index():
@@ -32,23 +33,33 @@ def generate_report():
         data = request.get_json()
         answers = data.get("answers", {})
         
-
         report_input = {
             "name": answers.get("name"),
             "age": answers.get("age"),
-    "complaint_duration": answers.get("complaint_duration"),
-    "key_findings_vitals": answers.get("key_findings_vitals"),
-    "relevant_history": answers.get("relevant_history"),
-}
-
-        print("done")
+            "complaint_duration": answers.get("complaint_duration"),
+            "key_findings_vitals": answers.get("key_findings_vitals"),
+            "relevant_history": answers.get("relevant_history"),
+        }
+        print("Processing report generation...")
         chain = create_case_report_chain()
         report_html = chain.invoke(report_input)
-
         return jsonify({"success": True, "report": report_html})
     except Exception as e:
         return jsonify({"success": False, "error": str(e)})
 
+# New endpoint: Display the review form
+@app.route('/review_form', methods=['GET'])
+def review_form():
+    return render_template('review_form.html')
+
+# New endpoint: Process form submission and store the review
+@app.route('/submit_review', methods=['POST'])
+def submit_review():
+    review_name = request.form.get("name")
+    review_content = request.form.get("review")
+    # Store review in memory (for demo purposes; in production, use a database)
+    reviews.append({"name": review_name, "review": review_content})
+    return render_template("review_thanks.html", name=review_name)
 
 if __name__ == '__main__':
     app.run(debug=True)

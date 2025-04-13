@@ -2,22 +2,22 @@
 <html lang="en" class="bg-slate-100 text-slate-900">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- Mobile meta tag -->
   <title>Medical Chat Assistant</title>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome for Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-  <!-- Tailwind Config -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Tailwind Config to enable dark mode -->
   <script>
     tailwind.config = {
       darkMode: 'class'
     }
   </script>
-
-  <!-- html2pdf.js -->
+  <!-- html2pdf.js for PDF download -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <!-- Axios -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -28,51 +28,50 @@
     .prose li { margin-bottom: 0.25rem; }
     .prose h2 { font-size: 1.25rem; font-weight: 600; margin-top: 1rem; margin-bottom: 0.5rem; }
     .prose p { margin-bottom: 0.5rem; }
-
     /* Simple scrollbar styling */
     #chat-container::-webkit-scrollbar { width: 8px; }
     #chat-container::-webkit-scrollbar-track { background: transparent; }
     #chat-container::-webkit-scrollbar-thumb { background-color: rgba(0, 0, 0, 0.2); border-radius: 10px; }
     html.dark #chat-container::-webkit-scrollbar-thumb { background-color: rgba(255, 255, 255, 0.2); }
-
     /* Typing Indicator Animation */
     .typing-dot {
-        animation: typing-blink 1.4s infinite both;
-        display: inline-block;
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background-color: currentColor; /* Inherits color */
-        margin: 0 1px;
+      animation: typing-blink 1.4s infinite both;
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: currentColor;
+      margin: 0 1px;
     }
-    .typing-dot:nth-child(2) { animation-delay: .2s; }
-    .typing-dot:nth-child(3) { animation-delay: .4s; }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
     @keyframes typing-blink {
-        0% { opacity: .2; }
-        20% { opacity: 1; }
-        100% { opacity: .2; }
+      0% { opacity: 0.2; }
+      20% { opacity: 1; }
+      100% { opacity: 0.2; }
     }
   </style>
 </head>
 <body class="transition-colors duration-300 bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100 min-h-screen flex flex-col p-2 sm:p-4">
-
   <!-- Toast Notification -->
   <div id="toast" class="fixed top-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow-xl hidden z-50 text-sm font-medium"></div>
 
-  <!-- App Container -->
-  <div class="w-full max-w-3xl mx-auto bg-white dark:bg-slate-800 shadow-xl rounded-xl overflow-hidden flex flex-col flex-grow">
-
-    <!-- Header -->
-    <div class="flex items-center justify-between p-4 bg-blue-600 dark:bg-blue-700 text-white font-semibold shadow-md">
-      <div class="flex items-center gap-2 text-lg">
+  <!-- Navbar -->
+  <header class="mb-4">
+    <nav class="flex items-center justify-between p-4 bg-blue-600 dark:bg-blue-700 text-white rounded-lg">
+      <div class="flex items-center gap-2 text-lg font-semibold">
         <i class="fa-solid fa-stethoscope"></i>
         <span>Medical Chat Assistant</span>
       </div>
-      <button onclick="toggleDarkMode()" aria-label="Toggle Dark Mode" class="text-lg px-2 py-1 rounded-md hover:bg-white/20 transition">
-        <i class="fa-solid fa-circle-half-stroke"></i>
-      </button>
-    </div>
+      <div class="flex gap-2">
+        <a href="/" class="px-3 py-2 hover:bg-blue-500 transition rounded">Home</a>
+        <a href="/review_form" class="px-3 py-2 hover:bg-blue-500 transition rounded">Review Form</a>
+      </div>
+    </nav>
+  </header>
 
+  <!-- App Container -->
+  <div class="w-full max-w-3xl mx-auto bg-white dark:bg-slate-800 shadow-xl rounded-xl overflow-hidden flex flex-col flex-grow">
     <!-- Chat Window -->
     <div id="chat-container" class="flex-grow p-4 space-y-4 overflow-y-auto text-sm sm:text-base bg-slate-50 dark:bg-slate-700">
       <!-- Initial Placeholder -->
@@ -81,16 +80,16 @@
         <p>Ready to start a new patient file?</p>
         <p>Type <strong class="text-blue-600 dark:text-blue-400">New case</strong> to begin.</p>
       </div>
-       <!-- Typing Indicator (Initially Hidden) -->
-       <div id="typing-indicator" class="flex items-center gap-2 text-slate-500 dark:text-slate-400 hidden">
-          <div class="w-8 h-8 bg-slate-200 dark:bg-slate-600 rounded-full flex items-center justify-center flex-shrink-0">
-              <i class="fa-solid fa-robot text-sm"></i>
-          </div>
-          <div class="bg-slate-200 dark:bg-slate-600 px-3 py-2 rounded-xl rounded-bl-none">
-              <span class="typing-dot"></span>
-              <span class="typing-dot"></span>
-              <span class="typing-dot"></span>
-          </div>
+      <!-- Typing Indicator (Initially Hidden) -->
+      <div id="typing-indicator" class="flex items-center gap-2 text-slate-500 dark:text-slate-400 hidden">
+        <div class="w-8 h-8 bg-slate-200 dark:bg-slate-600 rounded-full flex items-center justify-center flex-shrink-0">
+          <i class="fa-solid fa-robot text-sm"></i>
+        </div>
+        <div class="bg-slate-200 dark:bg-slate-600 px-3 py-2 rounded-xl rounded-bl-none">
+          <span class="typing-dot"></span>
+          <span class="typing-dot"></span>
+          <span class="typing-dot"></span>
+        </div>
       </div>
     </div>
 
@@ -104,8 +103,8 @@
           <span class="hidden sm:inline ml-2">Send</span>
         </button>
         <button id="download-btn" aria-label="Download Report as PDF" class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg text-sm sm:text-base transition duration-200 flex items-center justify-center w-10 h-10 sm:w-auto sm:px-4 hidden">
-           <i class="fa-solid fa-download"></i>
-           <span class="hidden sm:inline ml-2">Download</span>
+          <i class="fa-solid fa-download"></i>
+          <span class="hidden sm:inline ml-2">Download</span>
         </button>
       </div>
     </div>
@@ -125,17 +124,17 @@
 
     // Function to manage UI state (loading/idle)
     function setUILoading(isLoading) {
-        if (isLoading) {
-            typingIndicator.classList.remove('hidden');
-            sendBtn.disabled = true;
-            userInput.disabled = true; // Optionally disable input too
-            scrollChatToBottom(); // Scroll to show indicator
-        } else {
-            typingIndicator.classList.add('hidden');
-            sendBtn.disabled = false;
-            userInput.disabled = false; // Re-enable input
-            userInput.focus(); // Focus input after bot responds
-        }
+      if (isLoading) {
+        typingIndicator.classList.remove('hidden');
+        sendBtn.disabled = true;
+        userInput.disabled = true;
+        scrollChatToBottom();
+      } else {
+        typingIndicator.classList.add('hidden');
+        sendBtn.disabled = false;
+        userInput.disabled = false;
+        userInput.focus();
+      }
     }
 
     // Handle sending message
@@ -143,75 +142,70 @@
       const userMessage = userInput.value.trim();
       if (!userMessage) return;
 
-      // Hide placeholder if it's visible
+      // Hide placeholder if visible
       if (placeholder && !placeholder.classList.contains('hidden')) {
         placeholder.classList.add('hidden');
       }
 
-      appendChat("You", userMessage); // Changed "Doctor" to "You" for clarity
+      appendChat("You", userMessage);
       userInput.value = "";
-      setUILoading(true); // Show typing indicator, disable button
+      setUILoading(true);
 
       try {
-          if (step === -1 && ["new case", "start new patient file", "log new patient"].includes(userMessage.toLowerCase())) {
-            step = 0;
-            await getNextQuestion();
-          } else if (step >= 0 && step < keys.length) {
-            answers[keys[step]] = userMessage;
-            step++;
-            await getNextQuestion();
-          } else if (step === -1 && userMessage.toLowerCase() !== "new case") {
-             appendChat("Bot", "Please type 'New case' to start a new conversation.");
-             setUILoading(false); // Stop loading as it's just an info message
-          } else {
-              // If already finished but user types something other than 'New Case'
-              appendChat("Bot", "The current case is finished. Type 'New case' to start another.");
-              setUILoading(false); // Stop loading
-          }
+        if (step === -1 && ["new case", "start new patient file", "log new patient"].includes(userMessage.toLowerCase())) {
+          step = 0;
+          await getNextQuestion();
+        } else if (step >= 0 && step < keys.length) {
+          answers[keys[step]] = userMessage;
+          step++;
+          await getNextQuestion();
+        } else if (step === -1 && userMessage.toLowerCase() !== "new case") {
+          appendChat("Bot", "Please type 'New case' to start a new conversation.");
+          setUILoading(false);
+        } else {
+          appendChat("Bot", "The current case is finished. Type 'New case' to start another.");
+          setUILoading(false);
+        }
       } catch (error) {
-          console.error("Error during chat operation:", error);
-          appendChat("Bot", "Sorry, something went wrong. Please try again.");
-          setUILoading(false); // Stop loading on error
+        console.error("Error during chat operation:", error);
+        appendChat("Bot", "Sorry, something went wrong. Please try again.");
+        setUILoading(false);
       }
     };
 
     // Get next question or generate report
     async function getNextQuestion() {
       try {
-          if (step < keys.length) {
-            const res = await axios.post('/get_question', { step }); // Ensure this endpoint exists on your server
-            if (!res.data.done) {
-                appendChat("Bot", res.data.question);
-            }
-            setUILoading(false); // Bot has responded
-          } else {
-            appendChat("Bot", "Okay, generating the report based on the provided information...");
-            scrollChatToBottom(); // Scroll to show the "generating" message before request
-            const res = await axios.post('/generate_report', { answers }); // Ensure this endpoint exists
-            if (res.data.success) {
-              appendChat("Bot", res.data.report, true); // true indicates it's a report
-              downloadBtn.classList.remove('hidden');
-            } else {
-              appendChat("Bot", "Error generating report: " + res.data.error);
-            }
-            setUILoading(false); // Report generated or failed
-            resetChatState(); // Reset for a new case
+        if (step < keys.length) {
+          const res = await axios.post('/get_question', { step });
+          if (!res.data.done) {
+            appendChat("Bot", res.data.question);
           }
+          setUILoading(false);
+        } else {
+          appendChat("Bot", "Okay, generating the report based on the provided information...");
+          scrollChatToBottom();
+          const res = await axios.post('/generate_report', { answers });
+          if (res.data.success) {
+            appendChat("Bot", res.data.report, true);
+            downloadBtn.classList.remove('hidden');
+          } else {
+            appendChat("Bot", "Error generating report: " + res.data.error);
+          }
+          setUILoading(false);
+          resetChatState();
+        }
       } catch (error) {
-          console.error("Error fetching next step:", error);
-          appendChat("Bot", "There was an issue connecting to the server. Please check your connection and try again.");
-          setUILoading(false); // Stop loading on network or server error
-          // Optionally reset state if the error is critical
-          // resetChatState();
+        console.error("Error fetching next step:", error);
+        appendChat("Bot", "There was an issue connecting to the server. Please check your connection and try again.");
+        setUILoading(false);
       }
     }
 
     // Reset chat state for a new case
     function resetChatState() {
-        step = -1;
-        answers = {};
-        // Don't hide download button immediately, user might want to download first.
-        // It will be hidden implicitly if a new case starts and report isn't generated yet.
+      step = -1;
+      answers = {};
     }
 
     // Append chat message to the container
@@ -222,23 +216,29 @@
       if (isReport) {
         bubbleHTML = `
           <div class="flex flex-col items-start group">
-             <div class="flex items-center gap-2 mb-1">
-                <span class="w-6 h-6 bg-slate-600 rounded-full flex items-center justify-center flex-shrink-0 text-white text-xs"> <i class="fa-solid fa-robot"></i> </span>
-                <span class="text-xs font-medium text-slate-600 dark:text-slate-400">Bot Report</span>
-             </div>
-             <div class="w-full ml-0 p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-md rounded-lg" id="report-content">
-                 <div class="prose prose-sm sm:prose dark:prose-invert max-w-none">${message}</div>
-             </div>
-             <span class="text-xs text-slate-400 dark:text-slate-500 mt-1 ml-8">${timestamp}</span>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="w-6 h-6 bg-slate-600 rounded-full flex items-center justify-center flex-shrink-0 text-white text-xs">
+                <i class="fa-solid fa-robot"></i>
+              </span>
+              <span class="text-xs font-medium text-slate-600 dark:text-slate-400">Bot Report</span>
+            </div>
+            <div class="flex flex-col items-start ml-8 p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-md rounded-lg" id="report-content">
+              <div class="prose prose-sm sm:prose dark:prose-invert max-w-none">
+                ${message}
+              </div>
+            </div>
+            <span class="text-xs text-slate-400 dark:text-slate-500 mt-1 ml-8">${timestamp}</span>
           </div>`;
       } else if (sender === "You") {
         bubbleHTML = `
           <div class="flex flex-col items-end group">
             <div class="flex items-center gap-2 mb-1 flex-row-reverse">
-                <span class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 text-white text-xs"><i class="fa-solid fa-user"></i></span>
-                <span class="text-xs font-medium text-slate-600 dark:text-slate-400">You</span>
+              <span class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 text-white text-xs">
+                <i class="fa-solid fa-user"></i>
+              </span>
+              <span class="text-xs font-medium text-slate-600 dark:text-slate-400">You</span>
             </div>
-            <div class="bg-blue-500 text-white px-3 py-2 rounded-xl rounded-br-none max-w-[85%] sm:max-w-[75%]">
+            <div class="inline-block max-w-xl break-words bg-blue-500 text-white px-3 py-2 rounded-xl rounded-br-none">
               ${escapeHTML(message)}
             </div>
             <span class="text-xs text-slate-400 dark:text-slate-500 mt-1 mr-8">${timestamp}</span>
@@ -247,107 +247,49 @@
         bubbleHTML = `
           <div class="flex flex-col items-start group">
             <div class="flex items-center gap-2 mb-1">
-                <span class="w-6 h-6 bg-slate-600 rounded-full flex items-center justify-center flex-shrink-0 text-white text-xs"><i class="fa-solid fa-robot"></i></span>
-                <span class="text-xs font-medium text-slate-600 dark:text-slate-400">Bot</span>
+              <span class="w-6 h-6 bg-slate-600 rounded-full flex items-center justify-center flex-shrink-0 text-white text-xs">
+                <i class="fa-solid fa-robot"></i>
+              </span>
+              <span class="text-xs font-medium text-slate-600 dark:text-slate-400">Bot</span>
             </div>
-            <div class="bg-slate-200 dark:bg-slate-600 text-slate-900 dark:text-slate-100 px-3 py-2 rounded-xl rounded-bl-none max-w-[85%] sm:max-w-[75%]">
+            <div class="inline-block max-w-xl break-words bg-slate-200 dark:bg-slate-600 text-slate-900 dark:text-slate-100 px-3 py-2 rounded-xl rounded-bl-none">
               ${escapeHTML(message)}
             </div>
             <span class="text-xs text-slate-400 dark:text-slate-500 mt-1 ml-8">${timestamp}</span>
           </div>`;
       }
 
-       // Remove typing indicator before adding new message if it's a bot response
-       if (sender === "Bot" && !typingIndicator.classList.contains('hidden')) {
-           typingIndicator.classList.add('hidden');
-       }
+      // Remove typing indicator if present
+      if (sender === "Bot" && !typingIndicator.classList.contains('hidden')) {
+        typingIndicator.classList.add('hidden');
+      }
 
       chatContainer.innerHTML += bubbleHTML;
       scrollChatToBottom();
 
-      // Hide download button if it's not a report message being added
-      if (!isReport && !downloadBtn.classList.contains('hidden') && sender === 'You') {
-           // Optionally hide download button when user starts typing again after a report
-           // downloadBtn.classList.add('hidden');
+      if (placeholder && !placeholder.classList.contains('hidden')) {
+        placeholder.classList.add('hidden');
       }
-       // Ensure placeholder is hidden once messages appear
-       if (placeholder && !placeholder.classList.contains('hidden')) {
-           placeholder.classList.add('hidden');
-       }
     }
 
-     // Helper function to scroll chat
-     function scrollChatToBottom() {
-        chatContainer.scrollTop = chatContainer.scrollHeight;
-     }
+    // Helper: Scroll chat to the bottom
+    function scrollChatToBottom() {
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
 
-    // Helper to escape HTML to prevent XSS
+    // Helper: Escape HTML for safety
     function escapeHTML(str) {
-        const div = document.createElement('div');
-        div.textContent = str;
-        return div.innerHTML;
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
     }
 
-    // Send message on Enter key press
+    // Send on Enter key press
     userInput.addEventListener("keydown", function (event) {
-      if (event.key === "Enter" && !sendBtn.disabled) { // Check if button is not disabled
+      if (event.key === "Enter" && !sendBtn.disabled) {
         sendBtn.click();
       }
     });
-
-    // PDF Download
-    downloadBtn.onclick = () => {
-      const reportElement = document.getElementById("report-content");
-      if (!reportElement) return showToast("⚠️ No report content found to download.");
-
-      showToast("⏳ Generating PDF..."); // Give feedback that it's starting
-
-      const opt = {
-        margin:       [0.5, 0.5, 0.5, 0.5], // inches T, L, B, R
-        filename:     'medical_report_' + Date.now() + '.pdf',
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true, logging: false }, // Use scale 2 for better quality
-        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' },
-        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] } // Better page breaking
-      };
-
-      html2pdf().from(reportElement).set(opt).save().then(() => {
-        showToast("✅ Report downloaded successfully!");
-      }).catch(err => {
-        console.error("PDF generation error:", err);
-        showToast("❌ Failed to generate PDF.");
-      });
-    };
-
-    // Theme toggle
-    function toggleDarkMode() {
-      const isDark = document.documentElement.classList.toggle("dark");
-      localStorage.setItem('darkMode', isDark); // Optional: persist theme choice
-    }
-
-    // Check for saved theme preference on load
-    if (localStorage.getItem('darkMode') === 'true' || (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark');
-    } else {
-        document.documentElement.classList.remove('dark');
-    }
-
-    // Toast Notification
-    let toastTimeout;
-    function showToast(msg) {
-      const toast = document.getElementById("toast");
-      toast.innerText = msg;
-      toast.classList.remove("hidden", "opacity-0");
-      toast.classList.add("opacity-100"); // Fade in effect
-
-      clearTimeout(toastTimeout); // Clear previous timeout if any
-      toastTimeout = setTimeout(() => {
-          toast.classList.remove("opacity-100");
-          toast.classList.add("opacity-0");
-          setTimeout(() => toast.classList.add("hidden"), 500); // Wait for fade out
-      }, 3000);
-    }
-
   </script>
 </body>
 </html>
